@@ -1,6 +1,6 @@
 from threading import Thread
 import cv2
-from common import Timer
+from visutils.common import Timer
 
 
 class MTVideoCapture:
