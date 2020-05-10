@@ -1,12 +1,14 @@
 import multiprocessing
-from stream import StreamCreator, AsyncMode
+from visutils.stream import StreamCreator
 import cv2
-from common import Timer
+from visutils.common import Timer
 import numpy as np
 
 if __name__ == '__main__':
     print("Hello world ", multiprocessing.cpu_count())
-    st = StreamCreator.create_stream(async_mode=AsyncMode.MULTI_THREADING)
+    st = StreamCreator.create_stream('/Users/beherabimalananda/miniconda3/pkgs/torchvision-0.6.0-py38_cpu/info/test/test/assets/videos/v_SoccerJuggling_g24_c01.avi')
+    # st = StreamCreator.create_stream('/Users/beherabimalananda/Desktop/FaceMaskDetection_480p.mov')
+    # st = StreamCreator.create_stream()
     st.start()
     timer = Timer()
     timer.start()
@@ -14,13 +16,14 @@ if __name__ == '__main__':
     last_frame = None
     while True:
         frame = st.read()
+        if frame is None:
+            print('broke')
+            break
         i += 1
-        if frame is not None:
-            if not np.array_equal(last_frame, frame):
-                timer.tick()
-            cv2.imshow('Webcam', frame)
-            last_frame = np.copy(frame)
-        if cv2.waitKey(20) == ord('q'):
+        timer.tick()
+        cv2.imshow('Webcam', frame)
+        # last_frame = np.copy(frame)
+        if cv2.waitKey(25) == ord('q'):
             st.stop()
             timer.stop()
             print(timer.ticks_per_second())

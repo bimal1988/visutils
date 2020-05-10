@@ -1,18 +1,23 @@
-from .types import AsyncMode
 from .stream import Stream
-from .webcam_video_stream import WebcamVideoStream
+from .cam_video_stream import CamVideoStream
+from .file_video_stream import FileVideoStream
 from typing import Union
+from pathlib import Path
 
 
 class StreamCreator:
     @staticmethod
     def create_stream(src: Union[int, str] = 0,
-                      use_buffer: bool = False,
-                      buffer_size: int = 128,
-                      async_mode=AsyncMode.MULTI_THREADING) -> Stream:
+                      is_realtime: bool = None,
+                      buffer_size: int = 128) -> Stream:
         stream = None
 
         if isinstance(src, int):
-            stream = WebcamVideoStream(src, use_buffer, buffer_size, async_mode)
+            is_realtime = True if is_realtime is None else is_realtime
+            stream = CamVideoStream(src, is_realtime, buffer_size)
+
+        if isinstance(src, str):
+            if Path(src).exists():
+                stream = FileVideoStream(src, buffer_size)
 
         return stream
