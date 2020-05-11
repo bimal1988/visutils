@@ -140,5 +140,8 @@ cython_debug/
 # Idea project settings
 .idea
 
+# VSCode project settings
+.vscode
+
 # DS_Store
 .DS_Store

@@ -2,6 +2,7 @@ from .stream import Stream
 from .cam_video_stream import CamVideoStream
 from .file_video_stream import FileVideoStream
 from .network_video_stream import NetworkVideoStream
+from .youtube_video_input_stream import YoutubeVideoInputStream
 from typing import Union
 from pathlib import Path
 
@@ -18,7 +19,9 @@ class StreamCreator:
             stream = CamVideoStream(src, is_live, buffer_size)
 
         if isinstance(src, str):
-            if Path(src).exists():
+            if src.startswith('http'):
+                stream = YoutubeVideoInputStream(src, False, buffer_size)
+            elif Path(src).exists():
                 stream = FileVideoStream(src, buffer_size)
             else:
                 stream = NetworkVideoStream(src, is_live=is_live, buffer_size=128)
