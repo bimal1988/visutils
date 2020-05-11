@@ -1,8 +1,8 @@
-from .stream import Stream
+from .video_input_stream import VideoInputStream
 from .threaded_video_capture import ThreadedVideoCapture
 
 
-class CamVideoStream(Stream):
+class CamVideoInputVideoInputStream(VideoInputStream):
     def __init__(self,
                  src: int,
                  is_live: bool,

@@ -1,29 +1,29 @@
-from .stream import Stream
-from .cam_video_stream import CamVideoStream
-from .file_video_stream import FileVideoStream
-from .network_video_stream import NetworkVideoStream
-from .youtube_video_input_stream import YoutubeVideoInputStream
+from .video_input_stream import VideoInputStream
+from .cam_video_input_stream import CamVideoInputVideoInputStream
+from .file_video_input_stream import FileVideoInputVideoInputStream
+from .network_video_input_stream import NetworkVideoInputVideoInputStream
+from .youtube_video_input_stream import YoutubeVideoInputVideoInputStream
 from typing import Union
 from pathlib import Path
 
 
 class StreamCreator:
     @staticmethod
-    def create_stream(src: Union[int, str] = 0,
-                      is_live: bool = None,
-                      buffer_size: int = 128) -> Stream:
+    def create_video_input_stream(src: Union[int, str] = 0,
+                                  is_live: bool = None,
+                                  buffer_size: int = 128) -> VideoInputStream:
         stream = None
 
         if isinstance(src, int):
             is_live = True if is_live is None else is_live
-            stream = CamVideoStream(src, is_live, buffer_size)
+            stream = CamVideoInputVideoInputStream(src, is_live, buffer_size)
 
         if isinstance(src, str):
             if src.startswith('http'):
-                stream = YoutubeVideoInputStream(src, False, buffer_size)
+                stream = YoutubeVideoInputVideoInputStream(src, False, buffer_size)
             elif Path(src).exists():
-                stream = FileVideoStream(src, buffer_size)
+                stream = FileVideoInputVideoInputStream(src, buffer_size)
             else:
-                stream = NetworkVideoStream(src, is_live=is_live, buffer_size=128)
+                stream = NetworkVideoInputVideoInputStream(src, is_live=is_live, buffer_size=128)
 
         return stream

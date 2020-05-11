@@ -8,7 +8,7 @@ if __name__ == '__main__':
     # st = StreamCreator.create_stream('/Users/beherabimalananda/miniconda3/pkgs/torchvision-0.6.0-py38_cpu/info/test/test/assets/videos/v_SoccerJuggling_g24_c01.avi')
     # st = StreamCreator.create_stream('/Users/beherabimalananda/Desktop/FaceMaskDetection_480p.mov')
     # st = StreamCreator.create_stream('rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mov')
-    st = StreamCreator.create_stream('https://www.youtube.com/watch?v=FeJKJ5MoCHY')
+    st = StreamCreator.create_video_input_stream('https://www.youtube.com/watch?v=FeJKJ5MoCHY')
     # st = StreamCreator.create_stream()
     st.start()
     timer = Timer()

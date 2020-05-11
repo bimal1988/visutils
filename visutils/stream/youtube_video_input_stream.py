@@ -1,9 +1,9 @@
-from .stream import Stream
+from .video_input_stream import VideoInputStream
 from .threaded_video_capture import ThreadedVideoCapture
 import pafy
 
 
-class YoutubeVideoInputStream(Stream):
+class YoutubeVideoInputVideoInputStream(VideoInputStream):
     def __init__(self,
                  src: str,
                  is_live: bool,
