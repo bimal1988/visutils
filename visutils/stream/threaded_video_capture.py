@@ -5,9 +5,9 @@ from visutils.common import Timer
 
 
 class ThreadedVideoCapture:
-    def __init__(self, source, is_realtime, buffer_size):
+    def __init__(self, source, is_live, buffer_size):
         self._cap = cv2.VideoCapture(source)
-        self._is_realtime = is_realtime
+        self._is_live = is_live
         self._buffer = Queue(maxsize=buffer_size)
         self._thread = Thread(target=self._update, args=())
         self._thread.daemon = True
@@ -26,7 +26,7 @@ class ThreadedVideoCapture:
                 self._shutdown()
                 break
 
-            if self._is_realtime:
+            if self._is_live:
                 self._clear_buffer()
 
             self._buffer.put(frame)
