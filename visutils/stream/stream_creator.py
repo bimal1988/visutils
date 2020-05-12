@@ -25,7 +25,7 @@ class StreamCreator:
         elif source_type is SourceType.YOUTUBE:
             stream = YoutubeVideoInputVideoInputStream(src, False, buffer_size)
         elif source_type is SourceType.PICAMERA:
-            is_live = True if is_live is None else is_live
-            stream = CamVideoInputVideoInputStream(src, is_live, buffer_size)
+            from .picam_video_input_stream import PicamVideoInputStream
+            stream = PicamVideoInputStream(src)
 
         return stream

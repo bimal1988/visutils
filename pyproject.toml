@@ -2,13 +2,14 @@
 name = "visutils"
 version = "0.1.0"
 description = ""
-authors = ["bimal <bimal.behera@gmail.com>"]
+authors = ["bimal <bimaleal@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
 opencv-python = "^4.2.0"
 youtube_dl = "^2020.5.8"
 pafy = "^0.5.5"
+mss = "^5.1.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"

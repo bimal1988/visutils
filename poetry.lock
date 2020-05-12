@@ -40,6 +40,14 @@ version = "8.2.0"
 
 [[package]]
 category = "main"
+description = "An ultra fast cross-platform multiple screenshots module in pure python using ctypes."
+name = "mss"
+optional = false
+python-versions = ">=3.5"
+version = "5.1.0"
+
+[[package]]
+category = "main"
 description = "NumPy is the fundamental package for array computing with Python."
 name = "numpy"
 optional = false
@@ -154,7 +162,7 @@ python-versions = "*"
 version = "2020.5.8"
 
 [metadata]
-content-hash = "2a9e34c6529ad534caaf93f9e7bb559723e7f06c05c2c7c96cd8dc97e2832464"
+content-hash = "5b56e2c1cec2ae1f8a535c8e5c329593a017a9454637f5490cb5a2870e801e64"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -173,6 +181,10 @@ colorama = [
 more-itertools = [
     {file = "more-itertools-8.2.0.tar.gz", hash = "sha256:b1ddb932186d8a6ac451e1d95844b382f55e12686d51ca0c68b6f61f2ab7a507"},
     {file = "more_itertools-8.2.0-py3-none-any.whl", hash = "sha256:5dd8bcf33e5f9513ffa06d5ad33d78f31e1931ac9a18f33d37e77a180d393a7c"},
+]
+mss = [
+    {file = "mss-5.1.0-py3-none-any.whl", hash = "sha256:3573ae98d8c2a8c2e1acfb155a951cdde002bda7ed0c9c2f3acff09e5aad665e"},
+    {file = "mss-5.1.0.tar.gz", hash = "sha256:cc5d52540bca12dc8d355e8379597736ffcb2df7dc293ba095557fa4856e9423"},
 ]
 numpy = [
     {file = "numpy-1.18.4-cp35-cp35m-macosx_10_9_intel.whl", hash = "sha256:efdba339fffb0e80fcc19524e4fdbda2e2b5772ea46720c44eaac28096d60720"},
