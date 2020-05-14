@@ -1,11 +1,15 @@
-from visutils.stream import VideoInputStream
-from picamera.array import PiRGBArray
-from picamera import PiCamera
+from queue import Empty, Queue
 from threading import Thread
+
+from picamera import PiCamera
+from picamera.array import PiRGBArray
+
+from visutils.stream import VideoInputStream
 
 
 class PicamVideoInputStream(VideoInputStream):
-    def __init__(self, src: int, resolution=(320, 240), framerate=32, **kwargs):
+    def __init__(self, src: int, is_live=False, buffer_size=128,
+                 resolution=(320, 240), framerate=32, **kwargs):
         # initialize the camera
         self._camera = PiCamera(src)
 
@@ -20,40 +24,53 @@ class PicamVideoInputStream(VideoInputStream):
         # initialize the stream
         self._rawCapture = PiRGBArray(self._camera, size=resolution)
         self._stream = self._camera.capture_continuous(self._rawCapture,
-                                                       format="bgr", use_video_port=True)
+                                                       format="bgr",
+                                                       use_video_port=True)
+        self._is_live = is_live
+        self._buffer = Queue(maxsize=buffer_size)
+        self._thread = Thread(target=self._update, args=())
+        self._thread.daemon = True
 
-        # initialize the frame and the variable used to indicate
-        # if the thread should be stopped
         self._frame = None
         self._stopped = False
 
     def start(self):
-        # start the thread to read frames from the video stream
-        t = Thread(target=self._update, args=())
-        t.daemon = True
-        t.start()
-        return self
+        self._thread.start()
 
     def _update(self):
-        # keep looping infinitely until the thread is stopped
-        for f in self._stream:
+        while not self._stopped:
+            stream = next(self._stream)
+            frame = stream.array
+
+            if self._is_live:
+                self._clear_buffer()
+
+            self._buffer.put(frame)
+
             # grab the frame from the stream and clear the stream in
             # preparation for the next frame
-            self._frame = f.array
-            self._rawCapture.truncate(0)
+            self._rawCapture.seek(0)
+            self._rawCapture.truncate()
 
-            # if the thread indicator variable is set, stop the thread
-            # and resource camera resources
-            if self._stopped:
-                self._stream.close()
-                self._rawCapture.close()
-                self._camera.close()
-                return
+        self._stream.close()
+        self._rawCapture.close()
+        self._camera.close()
 
     def read(self):
-        # return the frame most recently read
-        return self._frame
+        return self._buffer.get()
+
+    def _shutdown(self):
+        self._stopped = True
+        self._clear_buffer()
+        self._buffer.put(None)
+
+    def _clear_buffer(self):
+        while not self._buffer.empty():
+            try:
+                self._buffer.get_nowait()
+            except Empty:
+                pass
 
     def stop(self):
-        # indicate that the thread should be stopped
-        self._stopped = True
+        self._shutdown()
+        self._thread.join()
