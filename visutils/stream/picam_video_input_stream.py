@@ -1,9 +1,10 @@
+from visutils.stream import VideoInputStream
 from picamera.array import PiRGBArray
 from picamera import PiCamera
 from threading import Thread
 
 
-class PicamVideoInputStream:
+class PicamVideoInputStream(VideoInputStream):
     def __init__(self, src: int, resolution=(320, 240), framerate=32, **kwargs):
         # initialize the camera
         self._camera = PiCamera(src)
