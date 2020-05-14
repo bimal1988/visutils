@@ -10,16 +10,17 @@ if __name__ == '__main__':
     # st = StreamCreator.create_video_input_stream('rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mov')
     # st = StreamCreator.create_video_input_stream('https://www.youtube.com/watch?v=FeJKJ5MoCHY')
     # st = StreamCreator.create_video_input_stream()
-    # st.start()
-    st = cv2.VideoCapture('videotestsrc ! video/x-raw,framerate=20/1 ! videoscale ! videoconvert ! appsink', cv2.CAP_GSTREAMER)
-    print(st)
+    st = StreamCreator.create_video_input_stream('lalu')
+    st.start()
+    # st = cv2.VideoCapture('videotestsrc ! video/x-raw,framerate=20/1 ! videoscale ! videoconvert ! appsink', cv2.CAP_GSTREAMER)
+
     timer = Timer()
     timer.start()
     i = 0
     last_frame = None
     while True:
-        res, frame = st.read()
-        print(frame)
+        frame = st.read()
+        # print(frame)
         if frame is None:
             break
         i += 1

@@ -3,6 +3,7 @@ from .cam_video_input_stream import CamVideoInputVideoInputStream
 from .file_video_input_stream import FileVideoInputVideoInputStream
 from .network_video_input_stream import NetworkVideoInputVideoInputStream
 from .youtube_video_input_stream import YoutubeVideoInputVideoInputStream
+from .screen_grab_video_input_stream import ScreenGrabVideoInputStream
 from visutils.common.path_utils import SourceType, get_source_type
 from typing import Union
 
@@ -27,5 +28,7 @@ class StreamCreator:
         elif source_type is SourceType.PICAMERA:
             from .picam_video_input_stream import PicamVideoInputStream
             stream = PicamVideoInputStream(src)
+        else:
+            stream = ScreenGrabVideoInputStream()
 
         return stream
