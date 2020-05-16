@@ -4,6 +4,9 @@ Computer vision utility library to perform common vision operations for deep lea
 
 Getting Started
 ===============
+
+.. code-block:: python
+
     from visutils.video import StreamCreator
     import cv2
 
