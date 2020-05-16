@@ -4,7 +4,7 @@ from threading import Thread
 from picamera import PiCamera
 from picamera.array import PiRGBArray
 
-from visutils.stream import VideoInputStream
+from visutils.video import VideoInputStream
 
 
 class PicamVideoInputStream(VideoInputStream):
@@ -21,7 +21,7 @@ class PicamVideoInputStream(VideoInputStream):
         for (arg, value) in kwargs.items():
             setattr(self._camera, arg, value)
 
-        # initialize the stream
+        # initialize the video
         self._rawCapture = PiRGBArray(self._camera, size=resolution)
         self._stream = self._camera.capture_continuous(self._rawCapture,
                                                        format="bgr",
@@ -47,7 +47,7 @@ class PicamVideoInputStream(VideoInputStream):
 
             self._buffer.put(frame)
 
-            # grab the frame from the stream and clear the stream in
+            # grab the frame from the video and clear the video in
             # preparation for the next frame
             self._rawCapture.seek(0)
             self._rawCapture.truncate()
