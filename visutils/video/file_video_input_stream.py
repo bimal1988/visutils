@@ -2,7 +2,7 @@ from .video_input_stream import VideoInputStream
 from .threaded_video_capture import ThreadedVideoCapture
 
 
-class FileVideoInputVideoInputStream(VideoInputStream):
+class FileVideoInputStream(VideoInputStream):
     def __init__(self,
                  src: str,
                  buffer_size: int):

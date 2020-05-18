@@ -1,2 +1,2 @@
-from .stream_creator import StreamCreator
+from .stream_creator import create_video_input_stream
 from .video_input_stream import VideoInputStream
